@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect()->route('posts.index'));
@@ -17,6 +18,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
+    ->name('comments.store');
+
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('comments.destroy');
 
 
 Route::get('/dashboard', function () {
